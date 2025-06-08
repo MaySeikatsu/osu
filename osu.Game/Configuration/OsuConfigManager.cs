@@ -452,7 +452,7 @@ namespace osu.Game.Configuration
 
         // toy stuff
         IntifaceAddress,
-        MultiplayerConsentAcknowledged
+        MultiplayerConsentAcknowledged,
 
         /// <summary>
         /// The status for the current user to broadcast to other players.
