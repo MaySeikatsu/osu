@@ -10,6 +10,7 @@ namespace osu.Game.Overlays.Settings.Sections
 {
     class ToySection : SettingsSection
     {
+        // public override string Header => "Toy";
         public override LocalisableString Header => "Toy";
 
         public override Drawable CreateIcon() => new SpriteIcon
