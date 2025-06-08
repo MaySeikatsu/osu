@@ -81,6 +81,7 @@ using osuTK;
 using osuTK.Graphics;
 using Sentry;
 using MatchType = osu.Game.Online.Rooms.MatchType;
+using Buttplug;
 
 namespace osu.Game
 {
@@ -155,6 +156,8 @@ namespace osu.Game
         private Container overlayOffsetContainer;
 
         private OnScreenDisplay onScreenDisplay;
+
+        public ButtplugClient ButtplugClient;
 
         [Resolved]
         private FrameworkConfigManager frameworkConfig { get; set; }

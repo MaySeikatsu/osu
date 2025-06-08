@@ -227,6 +227,10 @@ namespace osu.Game.Configuration
             SetDefault(OsuSetting.EditorSubmissionLoadInBrowserAfterSubmission, true);
 
             SetDefault(OsuSetting.WasSupporter, false);
+
+            // toy stuff
+            Set(OsuSetting.IntifaceAddress, "ws://127.0.0.1:12345");
+            Set(OsuSetting.MultiplayerConsentAcknowledged, false);
         }
 
         protected override bool CheckLookupContainsPrivateInformation(OsuSetting lookup)
@@ -445,6 +449,10 @@ namespace osu.Game.Configuration
         EditorShowSpeedChanges,
         TouchDisableGameplayTaps,
         ModSelectTextSearchStartsActive,
+
+        // toy stuff
+        IntifaceAddress,
+        MultiplayerConsentAcknowledged
 
         /// <summary>
         /// The status for the current user to broadcast to other players.
