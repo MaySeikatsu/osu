@@ -21,7 +21,7 @@ using osu.Framework.Localisation;
 namespace osu.Game.Rulesets.Osu.Mods
 {
     public class OsuModToy : Mod, IApplicableToHealthProcessor, IApplicableToScoreProcessor,
-        IApplicableToBeatmap, IApplicableToPlayer, IReadFromConfig, //IApplicableToDrawableHitObjects
+        IApplicableToBeatmap, IApplicableToPlayer, IReadFromConfig, IApplicableToDrawableHitObjects
     {
         public enum MotorBehavior
         {
