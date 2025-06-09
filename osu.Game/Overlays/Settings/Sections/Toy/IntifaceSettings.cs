@@ -8,7 +8,7 @@ using osu.Framework.Localisation;
 
 namespace osu.Game.Overlays.Settings.Sections.Toy
 {
-    class IntifaceSettings : SettingsSubsection
+    partial class IntifaceSettings : SettingsSubsection
     {
         // protected override string Header => "Intiface";
         protected override LocalisableString Header => "Intiface";
