@@ -18,7 +18,7 @@ using osu.Game.Scoring;
 using osu.Game.Screens.Play;
 using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Osu.Mods
+namespace osu.Game.Rulesets.Mods
 {
     public class OsuModToy : Mod, IApplicableToHealthProcessor, IApplicableToScoreProcessor,
         IApplicableToBeatmap, IApplicableToPlayer, IReadFromConfig, IApplicableToDrawableHitObjects
