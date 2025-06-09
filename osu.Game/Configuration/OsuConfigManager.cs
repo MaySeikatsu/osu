@@ -229,8 +229,8 @@ namespace osu.Game.Configuration
             SetDefault(OsuSetting.WasSupporter, false);
 
             // toy stuff
-            Set(OsuSetting.IntifaceAddress, "ws://127.0.0.1:12345");
-            Set(OsuSetting.MultiplayerConsentAcknowledged, false);
+            SetDefault(OsuSetting.IntifaceAddress, "ws://127.0.0.1:12345");
+            SetDefault(OsuSetting.MultiplayerConsentAcknowledged, false);
         }
 
         protected override bool CheckLookupContainsPrivateInformation(OsuSetting lookup)
