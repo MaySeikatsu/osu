@@ -18,10 +18,10 @@ using osu.Game.Scoring;
 using osu.Game.Screens.Play;
 using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Mods
+namespace osu.Game.Rulesets.Osu.Mods
 {
     public class OsuModToy : Mod, IApplicableToHealthProcessor, IApplicableToScoreProcessor,
-        IApplicableToBeatmap, IApplicableToPlayer, IReadFromConfig, IApplicableToDrawableHitObjects
+        IApplicableToBeatmap, IApplicableToPlayer, IReadFromConfig, IApplicableToDrawableHitObject
     {
         public enum MotorBehavior
         {
@@ -97,8 +97,8 @@ namespace osu.Game.Rulesets.Mods
 
                 for (uint i = 1; i <= MOTOR_COUNT; i++)
                 {
-                    var behavior = (Bindable<MotorBehavior>) GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
-                    var invert = (BindableBool) GetType().GetProperty($"Motor{i}Invert").GetValue(this);
+                    var behavior = (Bindable<MotorBehavior>)GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
+                    var invert = (BindableBool)GetType().GetProperty($"Motor{i}Invert").GetValue(this);
 
                     if (behavior.Value != MotorBehavior.Health) continue;
 
@@ -116,12 +116,12 @@ namespace osu.Game.Rulesets.Mods
             {
                 if (!userPlaying) return;
 
-                float speed = SpeedCap.Value * Math.Max(1, combo.NewValue / (float) maxCombo * MaxComboFactor.Value);
+                float speed = SpeedCap.Value * Math.Max(1, combo.NewValue / (float)maxCombo * MaxComboFactor.Value);
 
                 for (uint i = 1; i <= MOTOR_COUNT; i++)
                 {
-                    var behavior = (Bindable<MotorBehavior>) GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
-                    var invert = (BindableBool) GetType().GetProperty($"Motor{i}Invert").GetValue(this);
+                    var behavior = (Bindable<MotorBehavior>)GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
+                    var invert = (BindableBool)GetType().GetProperty($"Motor{i}Invert").GetValue(this);
 
                     if (behavior.Value != MotorBehavior.Combo) continue;
 
@@ -140,8 +140,8 @@ namespace osu.Game.Rulesets.Mods
 
                 for (uint i = 1; i <= MOTOR_COUNT; i++)
                 {
-                    var behavior = (Bindable<MotorBehavior>) GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
-                    var invert = (BindableBool) GetType().GetProperty($"Motor{i}Invert").GetValue(this);
+                    var behavior = (Bindable<MotorBehavior>)GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
+                    var invert = (BindableBool)GetType().GetProperty($"Motor{i}Invert").GetValue(this);
 
                     if (behavior.Value != MotorBehavior.Accuracy) continue;
 
@@ -154,36 +154,34 @@ namespace osu.Game.Rulesets.Mods
         }
 
         // This probably doesn't work rn lol
-        public void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
+        public void ApplyToDrawableHitObject(DrawableHitObject drawables)
         {
-            foreach (DrawableHitObject drawableHitObject in drawables)
+
+            drawables.State.ValueChanged += async (state) =>
             {
-                drawableHitObject.State.ValueChanged += async (state) =>
+                if (!userPlaying) return;
+                if (state.NewValue != ArmedState.Hit) return;
+
+                double speed = SpeedCap.Value;
+
+                for (uint i = 1; i <= MOTOR_COUNT; i++)
                 {
-                    if (!userPlaying) return;
-                    if (state.NewValue != ArmedState.Hit) return;
+                    var behavior = (Bindable<MotorBehavior>)GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
+                    var invert = (BindableBool)GetType().GetProperty($"Motor{i}Invert").GetValue(this);
 
-                    double speed = SpeedCap.Value;
+                    if (behavior.Value != MotorBehavior.Hit) continue;
 
-                    for (uint i = 1; i <= MOTOR_COUNT; i++)
+                    if (invert.Value)
                     {
-                        var behavior = (Bindable<MotorBehavior>) GetType().GetProperty($"Motor{i}Behavior").GetValue(this);
-                        var invert = (BindableBool) GetType().GetProperty($"Motor{i}Invert").GetValue(this);
-
-                        if (behavior.Value != MotorBehavior.Hit) continue;
-
-                        if (invert.Value)
-                        {
-                            await ButtplugStuff.Instance.VibrateAtSpeedTimeout(1 - speed, i - 1);
-                        }
-                        else
-                        {
-                            await ButtplugStuff.Instance.VibrateAtSpeedTimeout(speed, i - 1);
-                        }
-
+                        await ButtplugStuff.Instance.VibrateAtSpeedTimeout(1 - speed, i - 1);
                     }
-                };
-            }
+                    else
+                    {
+                        await ButtplugStuff.Instance.VibrateAtSpeedTimeout(speed, i - 1);
+                    }
+
+                }
+            };
         }
 
         public ScoreRank AdjustRank(ScoreRank rank, double accuracy)
@@ -294,7 +292,7 @@ namespace osu.Game.Rulesets.Mods
                         device.AllowedMessages[ServerMessage.Types.MessageAttributeType.VibrateCmd].FeatureCount - 1)
                         continue;
 
-                    await device.SendVibrateCmd(new Dictionary<uint, double> {[motor] = speed});
+                    await device.SendVibrateCmd(new Dictionary<uint, double> { [motor] = speed });
                 }
                 catch (Exception e)
                 {
@@ -316,7 +314,7 @@ namespace osu.Game.Rulesets.Mods
                         device.AllowedMessages[ServerMessage.Types.MessageAttributeType.VibrateCmd].FeatureCount - 1)
                         continue;
 
-                    await device.SendVibrateCmd(new Dictionary<uint, double> {[motor] = speed});
+                    await device.SendVibrateCmd(new Dictionary<uint, double> { [motor] = speed });
                 }
                 catch (Exception e)
                 {
