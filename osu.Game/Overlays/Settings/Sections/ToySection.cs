@@ -8,7 +8,7 @@ using osu.Framework.Localisation;
 
 namespace osu.Game.Overlays.Settings.Sections
 {
-    class ToySection : SettingsSection
+    partial class ToySection : SettingsSection
     {
         // public override string Header => "Toy";
         public override LocalisableString Header => "Toy";
