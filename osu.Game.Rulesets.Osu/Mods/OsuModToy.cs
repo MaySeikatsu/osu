@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
 using osu.Game.Screens.Play;
+using osu.Framework.Localisation;
 
 namespace osu.Game.Rulesets.Osu.Mods
 {
@@ -32,7 +33,7 @@ namespace osu.Game.Rulesets.Osu.Mods
         }
 
         public override string Name => "Toy";
-        public override string Description => "Play with toys.";
+        public override LocalisableString Description => "Play with toys.";
         public override string Acronym => "TY";
 
         public override IconUsage? Icon => FontAwesome.Solid.PepperHot;
